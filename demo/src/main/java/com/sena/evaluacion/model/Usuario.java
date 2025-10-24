@@ -1,0 +1,133 @@
+package com.sena.evaluacion.model;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "usuario")
+public class Usuario {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	
+	@Column(name = "Nombre")
+	private String nombre;
+	
+	@Column(name = "Correo electrónico")
+	private String email;
+	
+	@Column(name ="Contraseña")
+	private String password;
+	
+	@Column(name = "Teléfono")
+	private String telefono;
+	
+	@Column(name = "Fecha de registro")
+	private LocalDateTime fecha_registro;
+	
+	@OneToMany
+	private List<Profesional> profesional = new ArrayList<>();
+
+	@OneToMany
+	private List<Cita> cita = new ArrayList<>();
+
+	public Usuario() {}
+
+	public Usuario(Integer id, String nombre, String email, String password, String telefono,
+			LocalDateTime fecha_registro, List<Profesional> profesional, List<Cita> cita) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.email = email;
+		this.password = password;
+		this.telefono = telefono;
+		this.fecha_registro = fecha_registro;
+		this.profesional = profesional;
+		this.cita = cita;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public LocalDateTime getFecha_registro() {
+		return fecha_registro;
+	}
+
+	public void setFecha_registro(LocalDateTime fecha_registro) {
+		this.fecha_registro = fecha_registro;
+	}
+
+	public List<Profesional> getProfesional() {
+		return profesional;
+	}
+
+	public void setProfesional(List<Profesional> profesional) {
+		this.profesional = profesional;
+	}
+
+	public List<Cita> getCita() {
+		return cita;
+	}
+
+	public void setCita(List<Cita> cita) {
+		this.cita = cita;
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", nombre=" + nombre + ", email=" + email + ", password=" + password
+				+ ", telefono=" + telefono + ", fecha_registro=" + fecha_registro + ", profesional=" + profesional
+				+ ", cita=" + cita + "]";
+	}
+	
+	
+	
+	
+}
