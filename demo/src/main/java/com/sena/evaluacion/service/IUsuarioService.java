@@ -11,7 +11,7 @@ public interface IUsuarioService {
 	
 	Usuario findByNombre(String nombre);
 	
-	Usuario findByEmail(String email);
+	Optional<Usuario> findByEmail(String email);
 	
 	Usuario findByTelefono(String telefono);
 	

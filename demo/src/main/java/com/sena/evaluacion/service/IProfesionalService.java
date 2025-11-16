@@ -12,8 +12,6 @@ public interface IProfesionalService {
 	
 	Profesional findByEspecialidad(String especialidad);
 	
-	Profesional findByHorarioDisponible(LocalTime horarioDisponible);
-	
 	Profesional save(Profesional profesional);
 	
 	void delete(Integer id);

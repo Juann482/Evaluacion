@@ -51,9 +51,8 @@ public class ServicioServiceImplement implements IServicioService{
 	}
 
 	@Override
-	public List<Servicio> findAll() {
-		servicioRepository.findAll();
-		return null;
+	public List<Servicio> findAll() {		
+		return servicioRepository.findAll();
 	}
 
 }

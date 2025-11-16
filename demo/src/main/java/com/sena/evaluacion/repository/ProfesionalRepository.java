@@ -10,8 +10,6 @@ import com.sena.evaluacion.model.Profesional;
 @Repository
 public interface ProfesionalRepository extends JpaRepository<Profesional, Integer> {
 
-	Profesional findByHorarioDisponible(LocalTime horarioDisponible);
-
 	Profesional findByEspecialidad(String especialidad);
 
 }

@@ -9,6 +9,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -35,8 +37,11 @@ public class Usuario {
 	@Column(name = "Fecha de registro")
 	private LocalDateTime fecha_registro;
 	
-	@OneToMany
-	private List<Profesional> profesional = new ArrayList<>();
+	private String rol;
+	
+	@ManyToOne
+	@JoinColumn(name = "profesional_id",nullable = true)
+	private Profesional profesional;
 
 	@OneToMany
 	private List<Cita> cita = new ArrayList<>();
@@ -44,7 +49,7 @@ public class Usuario {
 	public Usuario() {}
 
 	public Usuario(Integer id, String nombre, String email, String password, String telefono,
-			LocalDateTime fecha_registro, List<Profesional> profesional, List<Cita> cita) {
+			LocalDateTime fecha_registro, Profesional profesional, List<Cita> cita, String rol) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -54,6 +59,7 @@ public class Usuario {
 		this.fecha_registro = fecha_registro;
 		this.profesional = profesional;
 		this.cita = cita;
+		this.rol = rol;
 	}
 
 	public Integer getId() {
@@ -104,11 +110,19 @@ public class Usuario {
 		this.fecha_registro = fecha_registro;
 	}
 
-	public List<Profesional> getProfesional() {
+	public Profesional getProfesional() {
 		return profesional;
 	}
 
-	public void setProfesional(List<Profesional> profesional) {
+	public String getRol() {
+		return rol;
+	}
+
+	public void setRol(String rol) {
+		this.rol = rol;
+	}
+
+	public void setProfesional(Profesional profesional) {
 		this.profesional = profesional;
 	}
 

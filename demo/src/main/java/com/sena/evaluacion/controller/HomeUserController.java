@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeUserController {
 	
 	@GetMapping("")
-	private String home() {
-		return "usuario/index";
+	private String Inicio() {
+		return "login";
 	}
 
 }

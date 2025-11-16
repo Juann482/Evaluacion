@@ -1,7 +1,6 @@
 package com.sena.evaluacion.model;
 
 import java.time.LocalTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +9,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -26,27 +23,31 @@ public class Profesional {
 	@Column(name = "Especialidad")
 	private String especialidad;
 	
-	@Column(name = "Horario disponible")
-	private LocalTime horarioDisponible;
+	@Column(name = "Hora de inicio")
+	private LocalTime horaInicio;
 	
-	@ManyToOne
-	@JoinColumn(name = "idUsuario")
-	private Usuario usuario;
+	@Column(name = "Hora fin")
+	private LocalTime horaFin;
+	
+	@OneToMany
+	private List<Usuario> usuario = new ArrayList<>();
 	
 	@OneToMany
 	private List<Cita> cita = new ArrayList<>();
 
 	public Profesional() {}
 
-	public Profesional(Integer id, String especialidad, LocalTime horarioDisponible, Usuario usuario,
+	public Profesional(Integer id, String especialidad, LocalTime horaInicio, LocalTime horaFin, List <Usuario> usuario,
 			List<Cita> cita) {
 		super();
 		this.id = id;
 		this.especialidad = especialidad;
-		this.horarioDisponible = horarioDisponible;
+		this.horaInicio = horaInicio;
+		this.horaFin = horaFin;
 		this.usuario = usuario;
 		this.cita = cita;
 	}
+
 
 	public Integer getId() {
 		return id;
@@ -64,19 +65,27 @@ public class Profesional {
 		this.especialidad = especialidad;
 	}
 
-	public LocalTime gethorarioDisponible() {
-		return horarioDisponible;
+	public LocalTime getHoraInicio() {
+		return horaInicio;
 	}
 
-	public void sethorarioDisponible(LocalTime horarioDisponible) {
-		this.horarioDisponible = horarioDisponible;
+	public void setHoraInicio(LocalTime horaInicio) {
+		this.horaInicio = horaInicio;
 	}
 
-	public Usuario getUsuario() {
+	public LocalTime getHoraFin() {
+		return horaFin;
+	}
+
+	public void setHoraFin(LocalTime horaFin) {
+		this.horaFin = horaFin;
+	}
+
+	public List <Usuario>  getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
+	public void setUsuario(List <Usuario> usuario) {
 		this.usuario = usuario;
 	}
 
@@ -90,9 +99,11 @@ public class Profesional {
 
 	@Override
 	public String toString() {
-		return "Profesional [id=" + id + ", especialidad=" + especialidad + ", horarioDisponible=" + horarioDisponible
-				+ ", usuario=" + usuario + ", cita=" + cita + "]";
+		return "Profesional [id=" + id + ", especialidad=" + especialidad + ", horaInicio=" + horaInicio + ", horaFin="
+				+ horaFin + ", usuario=" + usuario + ", cita=" + cita + "]";
 	}
+
+	
 	
 }
 

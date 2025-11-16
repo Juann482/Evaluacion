@@ -1,6 +1,6 @@
 package com.sena.evaluacion.model;
 
-import java.time.DateTimeException;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,26 +20,26 @@ public class Cita {
 	private Integer id;
 	
 	@Column(name = " Fecha y hora")
-	private DateTimeException Fecha_hora;
+	private LocalDateTime Fecha_hora;
 	
 	@Column(name = "Estado")
 	private String estado;
 	
 	@ManyToOne
-	@JoinColumn(name = "idUsuario")
+	@JoinColumn(name = "idUsuario", nullable = true)
 	private Usuario usuario;
 	
 	@ManyToOne
-	@JoinColumn(name = "idProfesional")
+	@JoinColumn(name = "idProfesional", nullable = true)
 	private Profesional profesional;
 	
 	@ManyToOne
-	@JoinColumn(name = "idServicio")
+	@JoinColumn(name = "idServicio", nullable = true)
 	private Servicio servicio;
 
 	public Cita() {}
 
-	public Cita(Integer id, DateTimeException fecha_hora, String estado, Usuario usuario, Profesional profesional,
+	public Cita(Integer id, LocalDateTime fecha_hora, String estado, Usuario usuario, Profesional profesional,
 			Servicio servicio) {
 		super();
 		this.id = id;
@@ -58,11 +58,11 @@ public class Cita {
 		this.id = id;
 	}
 
-	public DateTimeException getFecha_hora() {
+	public LocalDateTime getFecha_hora() {
 		return Fecha_hora;
 	}
 
-	public void setFecha_hora(DateTimeException fecha_hora) {
+	public void setFecha_hora(LocalDateTime fecha_hora) {
 		Fecha_hora = fecha_hora;
 	}
 

@@ -27,10 +27,10 @@ public class ProfesionalServiceImplement implements IProfesionalService{
 		return profesionalRepository.findByEspecialidad(especialidad);
 	}
 
-	@Override
-	public Profesional findByHorarioDisponible(LocalTime horarioDisponible) {
-		return profesionalRepository.findByHorarioDisponible(horarioDisponible);
-	}
+	//@Override
+	//public Profesional findByHorarioDisponible(LocalTime horarioDisponible) {
+	//	return profesionalRepository.findByHorarioDisponible(horarioDisponible);
+	//}
 
 	@Override
 	public Profesional save(Profesional profesional) {

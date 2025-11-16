@@ -98,8 +98,7 @@ public class Servicio {
 		return "Servicio [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", duracion=" + duracion
 				+ ", precio=" + precio + ", cita=" + cita + "]";
 	}
-	
-	
+		
 	
 	
 }
