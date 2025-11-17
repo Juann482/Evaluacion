@@ -55,4 +55,9 @@ public class UsuarioServiceImplement implements IUsuarioService {
 		return usuarioRepository.findAll();
 	}
 
+	@Override
+	public Optional<Usuario> findById(Integer id) {
+		return usuarioRepository.findById(id);
+	}
+
 }

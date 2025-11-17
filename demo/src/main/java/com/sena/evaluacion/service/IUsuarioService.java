@@ -22,4 +22,6 @@ public interface IUsuarioService {
 	void update(Usuario usuario);
 	
 	List<Usuario> findAll();
+
+	Optional<Usuario> findById(Integer id);
 }

@@ -30,7 +30,7 @@ public class Servicio {
 	@Column(name = "Precio")
 	private Double precio;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "servicio")
 	private List<Cita> cita = new ArrayList<>();
 
 	public Servicio() {}

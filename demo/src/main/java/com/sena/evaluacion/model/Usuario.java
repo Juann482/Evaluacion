@@ -40,10 +40,10 @@ public class Usuario {
 	private String rol;
 	
 	@ManyToOne
-	@JoinColumn(name = "profesional_id",nullable = true)
+	@JoinColumn(name = "profesional",nullable = true)
 	private Profesional profesional;
 
-	@OneToMany
+	@OneToMany(mappedBy = "usuario")
 	private List<Cita> cita = new ArrayList<>();
 
 	public Usuario() {}

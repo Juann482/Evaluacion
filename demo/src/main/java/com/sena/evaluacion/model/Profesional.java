@@ -9,6 +9,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -20,19 +22,19 @@ public class Profesional {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "Especialidad")
+	@Column(name = "especialidad")
 	private String especialidad;
 	
-	@Column(name = "Hora de inicio")
+	@Column(name = "hora_inicio")
 	private LocalTime horaInicio;
 	
-	@Column(name = "Hora fin")
+	@Column(name = "hora_fin")
 	private LocalTime horaFin;
 	
-	@OneToMany
-	private List<Usuario> usuario = new ArrayList<>();
+	@OneToMany(mappedBy = "profesional")
+	private List <Usuario> usuario = new ArrayList<>();
 	
-	@OneToMany
+	@OneToMany(mappedBy = "profesional")
 	private List<Cita> cita = new ArrayList<>();
 
 	public Profesional() {}
@@ -81,7 +83,7 @@ public class Profesional {
 		this.horaFin = horaFin;
 	}
 
-	public List <Usuario>  getUsuario() {
+	public List <Usuario> getUsuario() {
 		return usuario;
 	}
 
@@ -101,9 +103,7 @@ public class Profesional {
 	public String toString() {
 		return "Profesional [id=" + id + ", especialidad=" + especialidad + ", horaInicio=" + horaInicio + ", horaFin="
 				+ horaFin + ", usuario=" + usuario + ", cita=" + cita + "]";
-	}
-
-	
+	}	
 	
 }
 

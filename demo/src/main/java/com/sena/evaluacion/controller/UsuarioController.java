@@ -242,7 +242,7 @@ public class UsuarioController {
     	cita.setEstado("Activo");
     	citaService.save(cita); 
     	LOGGER.warn("Nueva cita programada: {}", cita);
-    	return "usuario/RegistroCITA";
+    	return "redirect:/usuario/historialC";
     }
     
     
@@ -252,6 +252,41 @@ public class UsuarioController {
     public String HistorialCT(Model model) {
     	model.addAttribute("citas", citaService.findAll());
     	return "usuario/HistorialCITA";
+    }
+    
+    @GetMapping("/EditCita/{id}")
+    public String EditarCita(@PathVariable Integer id, Cita cita, Model model) {
+    	
+    	Cita csm = new Cita();
+    	Optional<Cita> pt = citaService.get(id);
+    	csm = pt.get();
+    	model.addAttribute("Ok", csm);
+    	return "usuario/EdicionCITA";
+    }
+    
+    @PostMapping("/SendActCit")
+    public String SendCitaAct(Cita cita) {
+    	
+    	Cita c = citaService.get(cita.getId())
+    			.orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + cita.getId()));
+    	
+    	c.setEstado(cita.getEstado());
+    	c.setFecha_hora(cita.getFecha_hora());
+    	c.setProfesional(cita.getProfesional());
+    	c.setUsuario(cita.getUsuario());
+    	c.setServicio(cita.getServicio());
+    	
+    	citaService.save(c);
+    	LOGGER.warn("Cita actualizada con exito: {}", c);
+    	return "redirect:/usuario/historialC";
+    }
+    
+    @GetMapping("/DeleteCita/{id}")
+    public String DeleteCita(@PathVariable Integer id) {
+        Cita u = citaService.get(id).orElseThrow(() -> new RuntimeException("Cita no encontrado"));
+        citaService.delete(id);
+        LOGGER.warn("Cita eliminada: {}", u);
+        return "redirect:/usuario/HistorialCITA";
     }
 }
 

@@ -30,7 +30,7 @@ public class Cita {
 	private Usuario usuario;
 	
 	@ManyToOne
-	@JoinColumn(name = "idProfesional", nullable = true)
+	@JoinColumn(nullable = true)
 	private Profesional profesional;
 	
 	@ManyToOne
