@@ -13,16 +13,16 @@
 	<link rel="stylesheet" th:href="@{/assets/css/main.css}" />
 
 	<style>
-			.centrados {
-				text-align: center;
-			}
-		</style>
-	
+		.centrados {
+			text-align: center;
+		}
+	</style>
+
 	<!-- ======== Preloader =========== -->
 </head>
 <div id="preloader">
-		<div class="spinner"></div>
-	</div>
+	<div class="spinner"></div>
+</div>
 <!-- ======== Preloader =========== -->
 <div th:fragment="header">
 	<header class="header">
@@ -57,7 +57,7 @@
 											<img src="assets/images/profile/profile-image.png" alt="" />
 										</div>
 										<div>
-											<h6 class="fw-500">Adam Joe</h6>
+											<h6 class="fw-500">Juan Prieto</h6>
 											<p>Admin</p>
 										</div>
 									</div>
@@ -95,7 +95,7 @@
 								</li>
 								<li class="divider"></li>
 								<li>
-									<a href="#0"> <i class="lni lni-exit"></i> Sign Out </a>
+									<button th:href="@{/logout}" method="post"> <i class="lni lni-exit"></i> Salir </button>
 								</li>
 							</ul>
 						</div>
@@ -111,32 +111,13 @@
 	<!-- ======== sidebar-nav start =========== -->
 	<aside class="sidebar-nav-wrapper">
 		<div class="navbar-logo">
-			<a th:href="@{/usuario/index}">
+			<a>
 				<img th:src="@{/assets/images/logo/logo.svg}" alt="logo" />
 			</a>
 		</div>
 		<nav class="sidebar-nav">
 			<ul>
-				<li class="nav-item nav-item-has-children">
-					<a th:href="@{/#}" data-bs-toggle="collapse" data-bs-target="#ddmenu_1" aria-controls="ddmenu_1"
-						aria-expanded="false" aria-label="Toggle navigation">
-						<span class="icon">
-							<svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-								xmlns="http://www.w3.org/2000/svg">
-								<path
-									d="M8.74999 18.3333C12.2376 18.3333 15.1364 15.8128 15.7244 12.4941C15.8448 11.8143 15.2737 11.25 14.5833 11.25H9.99999C9.30966 11.25 8.74999 10.6903 8.74999 10V5.41666C8.74999 4.7263 8.18563 4.15512 7.50586 4.27556C4.18711 4.86357 1.66666 7.76243 1.66666 11.25C1.66666 15.162 4.83797 18.3333 8.74999 18.3333Z" />
-								<path
-									d="M17.0833 10C17.7737 10 18.3432 9.43708 18.2408 8.75433C17.7005 5.14918 14.8508 2.29947 11.2457 1.75912C10.5629 1.6568 10 2.2263 10 2.91665V9.16666C10 9.62691 10.3731 10 10.8333 10H17.0833Z" />
-							</svg>
-						</span>
-						<span class="text">Dashboard</span>
-					</a>
-					<ul id="ddmenu_1" class="collapse show dropdown-nav">
-						<li>
-							<a th:href="@{/usuario/index}" class="active"> Inicio </a>
-						</li>
-					</ul>
-				</li>
+				
 				<li class="nav-item nav-item-has-children">
 					<a href="#" class="collapsed" data-bs-toggle="collapse" data-bs-target="#ddmenu_2"
 						aria-controls="ddmenu_2" aria-expanded="false" aria-label="Toggle navigation">
@@ -227,16 +208,7 @@
 
 			</ul>
 		</nav>
-		<div class="promo-box">
-			<div class="promo-icon">
-				<img class="mx-auto" th:src="@{/./assets/images/logo/logo-icon-big.svg}" alt="Logo">
-			</div>
-			<h3>Upgrade to PRO</h3>
-			<p>Improve your development process and start doing more with PlainAdmin PRO!</p>
-			<a href="https://plainadmin.com/pro" target="_blank" rel="nofollow" class="main-btn primary-btn btn-hover">
-				Upgrade to PRO
-			</a>
-		</div>
+		
 	</aside>
 </div>
 
@@ -254,7 +226,7 @@
 				<div class="col-md-6 order-last order-md-first">
 					<div class="copyright text-center text-md-start">
 						<p class="text-sm">
-							Designed and Developed by
+							Diseñado por
 							<a href="https://plainadmin.com" rel="nofollow" target="_blank">
 								PlainAdmin
 							</a>
@@ -264,8 +236,8 @@
 				<!-- end col-->
 				<div class="col-md-6">
 					<div class="terms d-flex justify-content-center justify-content-md-end">
-						<a href="#0" class="text-sm">TErminos y condiciones</a>
-						<a href="#" class="text-sm ml-15">Plitica & privacidad</a>
+						<a href="#0" class="text-sm">Terminos y condiciones</a>
+						<a href="#" class="text-sm ml-15">Politica & privacidad</a>
 					</div>
 				</div>
 			</div>
@@ -826,24 +798,24 @@
 	</script>
 	<script>
 		document.addEventListener("DOMContentLoaded", () => {
-		   function actualizarFechaHora() {
-		     const ahora = new Date();
-		     const formatoVisible = ahora.toLocaleString('es-CO', {
-		       year: 'numeric',
-		       month: '2-digit',
-		       day: '2-digit',
-		       hour: '2-digit',
-		       minute: '2-digit',
-		       second: '2-digit'
-		     });
+			function actualizarFechaHora() {
+				const ahora = new Date();
+				const formatoVisible = ahora.toLocaleString('es-CO', {
+					year: 'numeric',
+					month: '2-digit',
+					day: '2-digit',
+					hour: '2-digit',
+					minute: '2-digit',
+					second: '2-digit'
+				});
 
-		     document.getElementById('fecha-hora').textContent = formatoVisible;
-		     document.getElementById('fecha-hora-input').value = ahora.toISOString();
-		   }
+				document.getElementById('fecha-hora').textContent = formatoVisible;
+				document.getElementById('fecha-hora-input').value = ahora.toISOString();
+			}
 
-		   actualizarFechaHora();
-		   setInterval(actualizarFechaHora, 1000);
-		 });
+			actualizarFechaHora();
+			setInterval(actualizarFechaHora, 1000);
+		});
 	</script>
 </div>
 <!-- ========= All Javascript files linkup ======== -->
