@@ -44,8 +44,6 @@ public class ApiProfesional {
 	@PostMapping
 	public ResponseEntity<Profesional> createProfesion(@RequestBody Profesional profesional){
 		
-		Usuario p = usuarioService.findById(1).get();
-		profesional.setUsuario(p);
 		Profesional pr = profesionalService.save(profesional);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(pr);

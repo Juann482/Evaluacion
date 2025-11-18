@@ -261,6 +261,9 @@ public class UsuarioController {
     	Optional<Cita> pt = citaService.get(id);
     	csm = pt.get();
     	model.addAttribute("Ok", csm);
+    	model.addAttribute("servicios", servicioService.findAll());
+    	model.addAttribute("usuarios", usuarioService.findAll());
+        model.addAttribute("especializacion", profesionalService.findAll());
     	return "usuario/EdicionCITA";
     }
     
@@ -269,7 +272,7 @@ public class UsuarioController {
     	
     	Cita c = citaService.get(cita.getId())
     			.orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + cita.getId()));
-    	
+    	cita.setEstado("Activo");
     	c.setEstado(cita.getEstado());
     	c.setFecha_hora(cita.getFecha_hora());
     	c.setProfesional(cita.getProfesional());
@@ -286,7 +289,7 @@ public class UsuarioController {
         Cita u = citaService.get(id).orElseThrow(() -> new RuntimeException("Cita no encontrado"));
         citaService.delete(id);
         LOGGER.warn("Cita eliminada: {}", u);
-        return "redirect:/usuario/HistorialCITA";
+        return "redirect:/usuario/historialC";
     }
 }
 

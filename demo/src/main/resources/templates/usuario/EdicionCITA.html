@@ -58,55 +58,50 @@
 								<h6 class="mb-25">Formulario de registros</h6>
 
 								<form th:action="@{/usuario/SendActCit}" method="post">
-									<input type="hidden" name="id" th:value="${Ok.id}" />
-
+									<div>
+										<input type="hidden" id="id" name="id" th:value="${Ok.id}">
+									</div>
 									<div class="row g-3">
-										<!-- Fecha y hora -->
 										<div class="col-md-6">
 											<div class="input-style-1">
+
 												<label>Fecha y hora</label>
-												<input type="datetime-local" name="fecha_hora"
-													th:value="${#dates.format(Ok.fecha_hora, 'yyyy-MM-dd\'T\'HH:mm')}"
-													required />
+												<input type="datetime-local" id="Fecha_hora" th:value="${Ok.Fecha_hora}"
+													name="Fecha_hora" required>
+
 											</div>
 										</div>
 
-										<!-- Doctor / Usuario -->
 										<div class="col-md-6">
 											<div class="select-style-1">
 												<div class="select-position">
 													<label>Doctor</label>
-													<select name="usuario.id">
-														<option th:each="u : ${usuarios}" th:value="${u.id}"
-															th:text="${u.profesional != null ? u.nombre + ' - ' + u.profesional.especialidad : u.nombre}"
-															th:selected="${u.id == Ok.usuario.id}">
-														</option>
+													<select id="Usuario" name="Usuario.id">
+														<option th:each="uwu : ${usuarios}" th:value="${uwu.id}"
+															th:text="${uwu.profesional != null ? uwu.nombre + '-' + uwu.profesional.especialidad : uwu.nombre}"></option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-12 ">
+											<div class="select-style-1">
+												<div class="select-position">
+													<label>Servicio</label>
+													<select id="Servicio" name="Servicio.id" th:value="${Ok.Servicio.id}">
+														<option th:each="uwu : ${servicios}" th:value="${uwu.id}"
+															th:text="${uwu.nombre + '-' + uwu.descripcion}"></option>
 													</select>
 												</div>
 											</div>
 										</div>
 
-										<!-- Servicio -->
-										<div class="col-md-12">
-											<div class="select-style-1">
-												<div class="select-position">
-													<label>Servicio</label>
-													<select name="servicio.id">
-														<option th:each="s : ${servicios}" th:value="${s.id}"
-															th:text="${s.nombre + ' - ' + s.descripcion}"
-															th:selected="${s.id == Ok.servicio.id}">
-														</option>
-													</select>
-												</div>
-											</div>
-										</div>
+										
 
 										<div class="col-12 text-center">
 											<button type="submit" class="btn btn-primary btn-submit">ACTUALIZAR</button>
 										</div>
 									</div>
 								</form>
-
 
 							</div>
 
