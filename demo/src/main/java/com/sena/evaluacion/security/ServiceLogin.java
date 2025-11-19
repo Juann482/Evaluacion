@@ -26,30 +26,21 @@ public class ServiceLogin implements UserDetailsService {
     @Autowired
     private HttpSession session;
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ServiceLogin.class);
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Usuario> user = usuarioService.findByEmail(username);
-        LOGGER.info("Intentando cargar usuario: {}", username);
+        
+    	Optional<Usuario> user = usuarioService.findByEmail(username);
 
-        if (user.isPresent()) {
+    	if (user.isEmpty()) {
+            throw new UsernameNotFoundException("Usuario no encontrado");
+        }   	
+        
             Usuario present = user.get();
-            session.setAttribute("IdUser", present.getId());
 
             return User.builder()
                     .username(present.getEmail())
                     .password(present.getPassword())
                     .authorities(present.getRol()) // usamos el rol tal cual en la DB
                     .build();
-        } else {
-            throw new UsernameNotFoundException("Usuario no encontrado");
-        }
+        } 
     }
-
-    // Método útil para encriptar contraseñas
-    public String encodePass(String rawPassword) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        return encoder.encode(rawPassword);
-    }
-}

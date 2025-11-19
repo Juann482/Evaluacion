@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sena.evaluacion.model.Profesional;
+import com.sena.evaluacion.model.Usuario;
 import com.sena.evaluacion.repository.ProfesionalRepository;
 
 @Service
@@ -43,8 +44,8 @@ public class ProfesionalServiceImplement implements IProfesionalService{
 	}
 
 	@Override
-	public void update(Profesional profesional) {
-		profesionalRepository.save(profesional);
+	public Profesional update(Profesional profesional) {
+		return profesionalRepository.save(profesional);
 	}
 
 	@Override

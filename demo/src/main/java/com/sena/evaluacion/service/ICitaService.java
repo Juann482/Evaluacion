@@ -15,7 +15,7 @@ public interface ICitaService {
 	
 	void delete(Integer id);
 	
-	void update(Cita cita);
+	Cita update(Cita cita);
 	
 	List<Cita> findAll();
 

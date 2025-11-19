@@ -21,59 +21,52 @@ import com.sena.evaluacion.service.IProfesionalService;
 import com.sena.evaluacion.service.IUsuarioService;
 
 @RestController
-@RequestMapping("/apiProfesional")
+@RequestMapping("/api/profesionales")
 public class ApiProfesional {
 
-	@Autowired
-	private IProfesionalService profesionalService;
-	
-	@Autowired
-	private IUsuarioService usuarioService;
-	
-	@GetMapping
-	public List<Profesional> getAllProfesionals(){
-		return profesionalService.findAll();
-	}
-	
-	@GetMapping("/{id}")
-	public ResponseEntity<Profesional> getProfesionalById(@PathVariable Integer id){
-		Optional<Profesional> prof = profesionalService.get(id);
-		return prof.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
-	}
-	
-	@PostMapping
-	public ResponseEntity<Profesional> createProfesion(@RequestBody Profesional profesional){
-		
-		Profesional pr = profesionalService.save(profesional);
-		
-		return ResponseEntity.status(HttpStatus.CREATED).body(pr);
-	}
-	
-	@PutMapping("/{id}")
-	public ResponseEntity<Profesional> updateProfesional(@PathVariable Integer id, @RequestBody Profesional profesional){
-		
-		Optional<Profesional> pf = profesionalService.get(id);
-		if (!pf.isPresent()) {
-			return ResponseEntity.notFound().build();
-		}
-		
-		Profesional auch = pf.get();
-		auch.setEspecialidad(profesional.getEspecialidad());
-		auch.setCita(profesional.getCita());
-		
-		profesionalService.update(auch);
-		return ResponseEntity.ok(auch);
-	}
-	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteProfes(@PathVariable Integer id){
-		
-		Optional<Profesional> uwu = profesionalService.get(id);
-		if (!uwu.isPresent()) {
-			return ResponseEntity.notFound().build();
-		}
-		profesionalService.delete(id);
-		
-		return ResponseEntity.ok().build();
-	}
+    @Autowired
+    private IProfesionalService profesionalService;
+
+    @GetMapping
+    public ResponseEntity<List<Profesional>> getAll() {
+        return ResponseEntity.ok(profesionalService.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Profesional> getById(@PathVariable Integer id) {
+        return profesionalService.get(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public ResponseEntity<Profesional> create(@RequestBody Profesional profesional) {
+        Profesional creado = profesionalService.save(profesional);
+        return ResponseEntity.status(HttpStatus.CREATED).body(creado);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Profesional> update(
+            @PathVariable Integer id,
+            @RequestBody Profesional profesional
+    ) {
+        return profesionalService.get(id)
+                .map(actual -> {
+                    actual.setEspecialidad(profesional.getEspecialidad());
+                    actual.setCita(profesional.getCita());
+                    Profesional actualizado = profesionalService.update(actual);
+                    return ResponseEntity.ok(actualizado);
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Integer id) {
+        return profesionalService.get(id)
+                .map(p -> {
+                    profesionalService.delete(id);
+                    return ResponseEntity.noContent().build();
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
 }

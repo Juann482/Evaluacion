@@ -19,7 +19,7 @@ public interface IUsuarioService {
 	
 	void delete(Integer id);
 	
-	void update(Usuario usuario);
+	Usuario update(Usuario usuario);
 	
 	List<Usuario> findAll();
 

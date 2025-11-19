@@ -19,14 +19,12 @@ public class Cita {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = " Fecha y hora")
 	private LocalDateTime Fecha_hora;
 	
-	@Column(name = "Estado")
 	private String estado;
 	
 	@ManyToOne
-	@JoinColumn(name = "idUsuario", nullable = true)
+	@JoinColumn(nullable = true)
 	private Usuario usuario;
 	
 	@ManyToOne
@@ -34,7 +32,7 @@ public class Cita {
 	private Profesional profesional;
 	
 	@ManyToOne
-	@JoinColumn(name = "idServicio", nullable = true)
+	@JoinColumn( nullable = true)
 	private Servicio servicio;
 
 	public Cita() {}

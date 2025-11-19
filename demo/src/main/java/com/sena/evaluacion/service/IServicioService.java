@@ -19,7 +19,7 @@ public interface IServicioService {
 	
 	void delete(Integer id);
 	
-	void update(Servicio servicio);
+	Servicio update(Servicio servicio);
 	
 	List<Servicio> findAll();
 	

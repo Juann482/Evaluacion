@@ -8,33 +8,34 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+import com.sena.evaluacion.model.Usuario;
+import com.sena.evaluacion.service.IUsuarioService;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @Component
 public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 
-    @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                        Authentication authentication) throws IOException, ServletException {
+	private final IUsuarioService usuarioService;
+	
+	 public CustomSuccessHandler(IUsuarioService usuarioService) {
+	        this.usuarioService = usuarioService;
+	    }
+	
+	@Override
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+			Authentication authentication) throws IOException, ServletException {
 
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-
-        for (GrantedAuthority authority : authorities) {
-            String rol = authority.getAuthority();
-            System.out.println("============= Rol detectado: " + rol + " =========");
-
-            if (rol.equals("Administrador") ) {
-            	 response.sendRedirect("usuario/HistorialU");
-                 System.out.println("Usuario logueado como admin");
-                 return;
-			}
-            
-            
-        }
-
-        // Fallback si no hay roles
-        response.sendRedirect("/");
-    }
+		String correo = authentication.getName();
+		
+		usuarioService.findByEmail(correo).ifPresent(user ->{
+			HttpSession session = request.getSession();
+			session.setAttribute("Nombre", user.getNombre());
+		});
+		
+		response.sendRedirect("/usuario/HistorialU");
+	}
 }

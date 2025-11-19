@@ -36,8 +36,8 @@ public class CitaServiceImplement implements ICitaService{
 	}
 
 	@Override
-	public void update(Cita cita) {
-		citaRepository.save(cita);
+	public Cita update(Cita cita) {
+		return citaRepository.save(cita);
 	}
 
 	@Override

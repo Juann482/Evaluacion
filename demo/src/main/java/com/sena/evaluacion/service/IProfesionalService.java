@@ -16,7 +16,7 @@ public interface IProfesionalService {
 	
 	void delete(Integer id);
 	
-	void update(Profesional profesional);
+	Profesional update(Profesional profesional);
 	
 	List<Profesional> findAll();
 

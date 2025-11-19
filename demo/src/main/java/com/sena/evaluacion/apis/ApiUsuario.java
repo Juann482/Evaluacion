@@ -1,80 +1,86 @@
 package com.sena.evaluacion.apis;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.sena.evaluacion.model.Usuario;
 import com.sena.evaluacion.service.IUsuarioService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/usuarios")
 public class ApiUsuario {
 
-	@Autowired
-	private IUsuarioService usuarioService;
+    private final IUsuarioService usuarioService;
 
-	// ===============================================================
+    public ApiUsuario(IUsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
 
-	@GetMapping
-	public List<Usuario> getAllUsuarios() {
-		return usuarioService.findAll();
-	}
+    @GetMapping
+    public ResponseEntity<List<Usuario>> listarTodos() {
+        List<Usuario> usuarios = usuarioService.findAll();
+        return ResponseEntity.ok(usuarios);
+    }
 
-	@GetMapping("/{id}")
-	public ResponseEntity<Usuario> getUsuarioById(@PathVariable Integer id) {
-		Optional<Usuario> usuario = usuarioService.get(id);
-		return usuario.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
-	}
+    @GetMapping("/{id}")
+    public ResponseEntity<Usuario> buscarPorId(@PathVariable Integer id) {
+        return usuarioService.get(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 
-	// Endpoint - Crear usuario
-	@PostMapping
-	public ResponseEntity<Usuario> crearUsuario(@RequestBody Usuario usuario) {
+    @PostMapping
+    public ResponseEntity<?> crear(@RequestBody Usuario usuario) {
+        try {
+            if (usuario.getEmail() == null || usuario.getEmail().isBlank()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("Email inválido");
+            }
 
-		Usuario saved = usuarioService.save(usuario);
+            Usuario nuevo = usuarioService.save(usuario);
+            return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
 
-		return ResponseEntity.status(HttpStatus.CREATED).body(saved);
-	}
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error creando el usuario");
+        }
+    }
 
-	// Endspoint - Actualizar usuario
-	@PutMapping("/{id}")
-	public ResponseEntity<Usuario> updateUsuario(@PathVariable Integer id, @RequestBody Usuario usuario) {
+    @PutMapping("/{id}")
+    public ResponseEntity<?> actualizar(@PathVariable Integer id, @RequestBody Usuario usuario) {
+        Optional<Usuario> existente = usuarioService.get(id);
 
-		Optional<Usuario> ui = usuarioService.get(id);
-		if (!ui.isPresent()) {
-			return ResponseEntity.notFound().build();
-		}
-		Usuario u = ui.get();
-		u.setNombre(usuario.getNombre());
-		u.setEmail(usuario.getEmail());
-		u.setPassword(usuario.getPassword());
-		u.setTelefono(usuario.getTelefono());
+        if (existente.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
 
-		usuarioService.update(u);
+        Usuario u = existente.get();
+        u.setNombre(usuario.getNombre());
+        u.setEmail(usuario.getEmail());
+        u.setPassword(usuario.getPassword());
+        u.setTelefono(usuario.getTelefono());
 
-		return ResponseEntity.ok(u);
-	}
+        try {
+            Usuario actualizado = usuarioService.update(u);
+            return ResponseEntity.ok(actualizado);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error actualizando el usuario");
+        }
+    }
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteUsuario(@PathVariable Integer id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
+        Optional<Usuario> encontrado = usuarioService.get(id);
 
-		Optional<Usuario> ud = usuarioService.get(id);
-		if (!ud.isPresent()) {
-			return ResponseEntity.notFound().build();
-		}
-		usuarioService.delete(id);
-		return ResponseEntity.ok().build();
-	}
+        if (encontrado.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
 
+        usuarioService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

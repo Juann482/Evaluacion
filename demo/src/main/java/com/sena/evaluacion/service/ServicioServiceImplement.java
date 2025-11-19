@@ -46,8 +46,8 @@ public class ServicioServiceImplement implements IServicioService{
 	}
 
 	@Override
-	public void update(Servicio servicio) {
-		servicioRepository.save(servicio);
+	public Servicio update(Servicio servicio) {
+		return servicioRepository.save(servicio);
 	}
 
 	@Override
