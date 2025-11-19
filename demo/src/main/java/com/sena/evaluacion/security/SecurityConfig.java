@@ -3,6 +3,7 @@ package com.sena.evaluacion.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -14,47 +15,49 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-	 private final ServiceLogin serviceLogin;
-	    private final CustomSuccessHandler successHandler;
+    private final ServiceLogin serviceLogin;
+    private final CustomSuccessHandler successHandler;
 
-	    public SecurityConfig(ServiceLogin serviceLogin, CustomSuccessHandler successHandler) {
-	        this.serviceLogin = serviceLogin;
-	        this.successHandler = successHandler;
-	    }
+    public SecurityConfig(ServiceLogin serviceLogin, CustomSuccessHandler successHandler) {
+        this.serviceLogin = serviceLogin;
+        this.successHandler = successHandler;
+    }
 
-	    @Bean
-	    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-	        http
-	            .csrf(csrf -> csrf.disable())
-	            .authorizeHttpRequests(auth -> auth
-	                .requestMatchers("/", "/assets/**", "/images/**", "/css/**", "/js/**", "/img/**").permitAll()
-	                .requestMatchers("/usuario/**").hasAuthority("Administrador")
-	                .anyRequest().authenticated()
-	            )
-	            .formLogin(login -> login
-	                .loginPage("/")
-	                .loginProcessingUrl("/login")
-	                .successHandler(successHandler)
-	                .permitAll()
-	            )
-	            .logout(logout -> logout
-	                .logoutUrl("/logout")
-	                .logoutSuccessUrl("/")
-	                .permitAll()
-	            )
-	            .userDetailsService(serviceLogin);
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-	        return http.build();
-	    }
+        http
+            .csrf(csrf -> csrf.disable())
+            .securityMatcher("/usuario/**")
 
-	    @Bean
-	    PasswordEncoder passwordEncoder() {
-	        return new BCryptPasswordEncoder();
-	    }
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/usuario/**").hasAuthority("Administrador")
+                .anyRequest().authenticated()
+            )
 
-	    @Bean
-	    AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-	        return config.getAuthenticationManager();
-	    }
+            .formLogin(login -> login
+                .loginPage("/Login")
+                .loginProcessingUrl("/login")
+                .successHandler(successHandler)
+                .permitAll()
+            )
+            .logout(logout -> logout
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/")
+                .permitAll()
+            )
+            .userDetailsService(serviceLogin);
 
+        return http.build();
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
 }

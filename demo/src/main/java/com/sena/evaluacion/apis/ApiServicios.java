@@ -21,7 +21,7 @@ import com.sena.evaluacion.service.IServicioService;
 import com.sena.evaluacion.service.IUsuarioService;
 
 @RestController
-@RequestMapping("/apiServicio")
+@RequestMapping("/api/servicio")
 public class ApiServicios {
 
 	@Autowired

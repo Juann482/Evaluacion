@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,19 +24,14 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "Nombre")
 	private String nombre;
 	
-	@Column(name = "Correo electrónico")
 	private String email;
 	
-	@Column(name ="Contraseña")
 	private String password;
 	
-	@Column(name = "Teléfono")
 	private String telefono;
 	
-	@Column(name = "Fecha de registro")
 	private LocalDateTime fecha_registro;
 	
 	private String rol;
@@ -44,6 +41,7 @@ public class Usuario {
 	private Profesional profesional;
 
 	@OneToMany(mappedBy = "usuario")
+	@JsonIgnore
 	private List<Cita> cita = new ArrayList<>();
 
 	public Usuario() {}

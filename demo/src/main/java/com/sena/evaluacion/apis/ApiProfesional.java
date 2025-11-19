@@ -21,7 +21,7 @@ import com.sena.evaluacion.service.IProfesionalService;
 import com.sena.evaluacion.service.IUsuarioService;
 
 @RestController
-@RequestMapping("/apiProfesional")
+@RequestMapping("/api/profesional")
 public class ApiProfesional {
 
 	@Autowired

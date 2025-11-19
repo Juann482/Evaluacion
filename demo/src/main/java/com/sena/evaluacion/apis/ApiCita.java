@@ -21,7 +21,7 @@ import com.sena.evaluacion.service.ICitaService;
 import com.sena.evaluacion.service.IUsuarioService;
 
 @RestController
-@RequestMapping("/apiCita")
+@RequestMapping("/api/cita")
 public class ApiCita {
 
 	@Autowired

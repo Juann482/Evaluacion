@@ -15,13 +15,13 @@
 
             <div class="mb-3 text-start">
                 <label for="inputPassword" class="form-label">Contraseña</label>
-                <input type="password" id="inputPassword" class="form-control" name="password" placeholder="••••••••" required>
+                <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Contraseña" required>
             </div>
 
             <button type="submit" class="btn">Ingresar</button>
 
             <div class="footer-text">
-                <p>¿No tienes una cuenta? <a href="#">Regístrate</a></p>
+                <p>¿No tienes una cuenta? <a th:href="@{/Registrarse}">Regístrate</a></p>
             </div>
         </form>
     </section>

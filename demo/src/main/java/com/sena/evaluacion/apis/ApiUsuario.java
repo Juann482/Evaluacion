@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,9 @@ public class ApiUsuario {
 
 	@Autowired
 	private IUsuarioService usuarioService;
+	
+	@Autowired
+    private PasswordEncoder passwordEncoder;
 
 	// ===============================================================
 
@@ -42,6 +46,7 @@ public class ApiUsuario {
 	@PostMapping
 	public ResponseEntity<Usuario> crearUsuario(@RequestBody Usuario usuario) {
 
+		usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
 		Usuario saved = usuarioService.save(usuario);
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(saved);
@@ -58,8 +63,11 @@ public class ApiUsuario {
 		Usuario u = ui.get();
 		u.setNombre(usuario.getNombre());
 		u.setEmail(usuario.getEmail());
-		u.setPassword(usuario.getPassword());
 		u.setTelefono(usuario.getTelefono());
+		
+		if (usuario.getPassword() != null && !usuario.getPassword().isBlank()) {
+            u.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        }
 
 		usuarioService.update(u);
 

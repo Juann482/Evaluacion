@@ -26,7 +26,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
             System.out.println("============= Rol detectado: " + rol + " =========");
 
             if (rol.equals("Administrador") ) {
-            	 response.sendRedirect("usuario/HistorialU");
+            	 response.sendRedirect("/usuario/HistorialU");
                  System.out.println("Usuario logueado como admin");
                  return;
 			}

@@ -71,10 +71,10 @@
 									</thead>
 									<tbody th:each="cita: ${citas}">
 										<tr class="centrados">
-											<td th:text="${cita.Usuario.nombre}"></td>
+											<td th:text="${cita.Usuario != null ? cita.Usuario.nombre : '-'}"></td>
 											<td th:text="${cita.Fecha_hora}"></td>
 											<td th:text="${cita.estado}" style="color: rgb(0, 255, 0);"></td>
-											<td th:text="${cita.Servicio.descripcion}"></td>
+											<td th:text="${cita.Servicio != null ? cita.Servicio.descripcion : '-'}"></td>
 
 											<td><a title="Editar" class="btn btn-warning"
 													th:href="@{/usuario/EditCita/{id} (id = ${cita.id})}">

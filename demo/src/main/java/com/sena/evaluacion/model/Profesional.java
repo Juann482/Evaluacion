@@ -4,6 +4,8 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,19 +24,18 @@ public class Profesional {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "especialidad")
 	private String especialidad;
 	
-	@Column(name = "hora_inicio")
 	private LocalTime horaInicio;
 	
-	@Column(name = "hora_fin")
 	private LocalTime horaFin;
-	
+	 
 	@OneToMany(mappedBy = "profesional")
+	@JsonIgnore
 	private List <Usuario> usuario = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "profesional")
+	@JsonIgnore 
 	private List<Cita> cita = new ArrayList<>();
 
 	public Profesional() {}
