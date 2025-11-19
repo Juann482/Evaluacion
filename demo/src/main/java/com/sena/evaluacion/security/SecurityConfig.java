@@ -39,11 +39,17 @@ public class SecurityConfig {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(auth -> auth
-						.requestMatchers("/", "/assets/**", "/images/**", "/css/**", "/js/**", "/img/**").permitAll()
+						.requestMatchers("/", "/assets/**", "/images/**", "/css/**", "/js/**", "/img/**", "/Registrarse").permitAll()
 						.requestMatchers("/usuario/**").hasAuthority("Administrador").anyRequest().authenticated())
-				.formLogin(login -> login.loginPage("/").loginProcessingUrl("/login").successHandler(successHandler)
+				.formLogin(login -> login
+						.loginPage("/Login")
+						.loginProcessingUrl("/login")
+						.successHandler(successHandler)
 						.permitAll())
-				.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/").permitAll())
+				.logout(logout -> logout
+						.logoutUrl("/logout")
+						.logoutSuccessUrl("/")
+						.permitAll())
 				.userDetailsService(serviceLogin);
 
 		return http.build();

@@ -18,16 +18,13 @@ public class Servicio {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name = "Nombre")
+	
 	private String nombre;
 	
-	@Column(name = "Descripción")
 	private String descripcion;
 	
-	@Column(name = "Duración")
 	private String duracion;
 	
-	@Column(name = "Precio")
 	private Double precio;
 	
 	@OneToMany(mappedBy = "servicio")

@@ -22,13 +22,10 @@ public class Profesional {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "especialidad")
 	private String especialidad;
 	
-	@Column(name = "hora_inicio")
 	private LocalTime horaInicio;
 	
-	@Column(name = "hora_fin")
 	private LocalTime horaFin;
 	
 	@OneToMany(mappedBy = "profesional")

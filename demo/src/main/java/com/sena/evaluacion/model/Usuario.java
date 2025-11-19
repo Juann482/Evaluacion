@@ -22,25 +22,20 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "Nombre")
 	private String nombre;
 	
-	@Column(name = "Correo electrónico")
 	private String email;
 	
-	@Column(name ="Contraseña")
 	private String password;
 	
-	@Column(name = "Teléfono")
 	private String telefono;
 	
-	@Column(name = "Fecha de registro")
 	private LocalDateTime fecha_registro;
 	
 	private String rol;
 	
 	@ManyToOne
-	@JoinColumn(name = "profesional",nullable = true)
+	@JoinColumn(nullable = true)
 	private Profesional profesional;
 
 	@OneToMany(mappedBy = "usuario")
